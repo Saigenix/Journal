@@ -54,9 +54,35 @@ export const CreateJournal = async (userID, date, dataNew) => {
   // const data = user.data().journals;
 };
 
+const DeleteJournal = async (userID,datadel) => {
+  firestore()
+    .collection('Journal')
+    .doc(userID)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        const data = documentSnapshot.data().journals;
+        const newData = data.filter(item => item.journal !== datadel);
+        firestore()
+          .collection('Journal')
+          .doc(userID)
+          .set({
+            journals: newData,
+          })
+          .then(() => {
+            ToastAndroid.show(
+              'Journal Deleted successfully!',
+              ToastAndroid.SHORT,
+            );
+          });
+      }
+    });
+}
+
 const Firestore = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [deldata, delsetData] = useState("");
   const {user} = useContext(AuthContext);
   const userID = user.uid;
 
@@ -68,7 +94,7 @@ const Firestore = ({navigation}) => {
         if (documentSnapshot.exists) {
           setData(documentSnapshot.data().journals);
         }
-        //     console.log('User data: ', documentSnapshot.data().journals);
+          // console.log('User data: ', documentSnapshot.data()[0]);
       });
 
     // Stop listening for updates when no longer required
@@ -87,6 +113,7 @@ const Firestore = ({navigation}) => {
       <TouchableOpacity
       onPress={open}
       onLongPress={()=>{
+        delsetData(item.journal);
         setModalVisible(true);
       }}
       >
@@ -101,7 +128,7 @@ const Firestore = ({navigation}) => {
     return (
       <View style={styles.nonote}>
         <Text style={{color: 'white', fontSize: 20}}>
-          Click on Todays journal icon to make new note!
+          Click on + icon to add your first journal!
         </Text>
       </View>
     );
@@ -126,7 +153,10 @@ const Firestore = ({navigation}) => {
           <View style={styles.modalView}>
             <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
-              onPress={() =>{}} >
+              onPress={() =>{
+                DeleteJournal(userID,deldata);
+                setModalVisible(!modalVisible);
+              }} >
               <Text style={styles.textStyle}>Delete Note !</Text>
             </TouchableOpacity>
           </View>

@@ -52,6 +52,9 @@ const Login = ({navigation}) => {
       <TouchableOpacity style={styles.btn} onPress={()=>SignupEmail(email,password)}>
         <Text style={styles.txt}>Login</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.btn} onPress={()=>SignupEmail(email,password)}>
+        <Text style={styles.txt}>Sign Up</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.btn}
         onPress={() =>
@@ -72,7 +75,8 @@ const Login = ({navigation}) => {
       {/* <TouchableOpacity style={styles.btn} onPress={()=>SigninAnonymous(email,password)}>
         <Text style={styles.txt}>Login Anonymously</Text>
       </TouchableOpacity> */}
-      <Text style={styles.saigenix}>Made by @saigenix</Text>
+      
+      <Text style={styles.saigenix}>Made By Saigenix</Text>
     </View>
   );
 };
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     padding: 10,
     marginTop: 10,
-    borderRadius: 3,
+    borderRadius: 0,
     borderWidth: 1,
     borderColor: 'white',
   },
@@ -120,10 +124,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   saigenix: {
-    color: 'yellow',
+    color: 'white',
     opacity: 0.5,
     fontSize: 20,
-    marginTop: 30,
+    marginTop: 50,
   },
   title: {
     fontSize: 40,
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     top: -50,
     transform: [{ rotate: '-10deg' }],
-    textShadowColor: 'white',
+   // textShadowColor: 'white',
   textShadowOffset: {width: -3, height: 3},
   textShadowRadius: 15
 
